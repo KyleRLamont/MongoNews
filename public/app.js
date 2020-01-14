@@ -46,3 +46,8 @@ $(document).on("click", "#savenote", function () {
     $("#titleinput").val("");
     $("#bodyinput").val("");
 });
+
+function on() {
+    document.getElementById("overlay").style.display = "block";
+}
+on();
