@@ -5,7 +5,7 @@ var cheerio = require("cheerio");
 
 var db = require("./models");
 
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 
 var app = express();
 
@@ -29,10 +29,8 @@ app.get("/scrape", function (req, res) {
             result.link = $(element)
                 .find("a")
                 .attr("href");
-            console.log(result);
             db.Article.create(result)
                 .then(function (dbArticle) {
-                    console.log(dbArticle);
                 })
                 .catch(function (err) {
                     console.log(err);

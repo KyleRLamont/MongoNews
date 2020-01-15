@@ -5,6 +5,7 @@
     width: 100%;
     position: relative;
     padding: 0%;
+    margin-bottom: 0%;
 }
 
 #heading {
@@ -36,18 +37,19 @@
     margin-left: auto;
     margin-right: auto;
     padding-top: 5%;
+    background-image: url(./concrete_seamless.png);
 }
 
 #articles {
     display: inline-block;
     overflow: auto;
-    width: 60%;
+    width: 70%;
     height: 700px;
 }
 
 #notes {
     float: right;
-    width: 30%;
+    width: 20%;
 }
 
 .scraper {
