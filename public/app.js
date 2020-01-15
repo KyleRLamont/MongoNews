@@ -47,7 +47,3 @@ $(document).on("click", "#savenote", function () {
     $("#bodyinput").val("");
 });
 
-function on() {
-    document.getElementById("overlay").style.display = "block";
-}
-on();
