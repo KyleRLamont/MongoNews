@@ -3,6 +3,7 @@ $.getJSON("/articles", function (data) {
         $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
     }
 });
+$(document).
 
 
 $(document).on("click", "p", function () {
@@ -47,3 +48,13 @@ $(document).on("click", "#savenote", function () {
     $("#bodyinput").val("");
 });
 
+$(document).on("click", ".scraper", function () {
+    $.ajax({
+        method: "GET",
+        url: "/scrape"
+    }).then(function(err, data) {
+        if (err) {
+            console.log(err)
+        }
+    });
+})
