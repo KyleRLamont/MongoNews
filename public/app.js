@@ -60,24 +60,12 @@ $(document).ready(function () {
     });
 
     $(document).on("click", ".scraper", function () {
+        $("#articles").empty();
         $.ajax({
             method: "GET",
             url: "/scrape"
         }).then(function (err, data) {
-            if (err) {
-                console.log(err)
-            } 
-            else if (data) {
-                $.ajax({
-                    method: "GET",
-                    url: "/articles"
-                }).then(function(data){
-                    $("#articles").empty();
-                    for (var i = 0; i < data.length; i++) {
-                        $("#articles").append("<p>" + data[i].title + "<br />" + "<a href ='https://www.nytimes.com'" + data[i].link + ">" + "Article Link" + "</a>" + "<br />" + "<button class='addnote' data-id='" + data[i]._id + "'>" + "Add Note" + "</button>" + "</p>");
-                    }
-                })
-            }
+            location.reload(true)
         });
     })
 })
