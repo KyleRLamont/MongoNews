@@ -16,6 +16,11 @@ button {
     position: absolute;
     top: 30%;
     width: 100%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.newstag {
+    font-size: 50px;
 }
 
 #jumboback {
