@@ -51,7 +51,7 @@ $(document).on("click", ".viewnote", function () {
         url: "/articles/" + thisId
     }).then(function (data) {
         console.log(data.note)
-        $("#notes").append("<p>" + data.note.title + "<br />" + data.note.body + "</p>")
+        $("#notes").append("<p>" + data.note.title + "<br />" + data.note.body + "<br /><button data-id='" + data._id + "' id='deletenote'>Delete Note</button>" + "</p>")
     })
 })
 
@@ -74,6 +74,17 @@ $(document).on("click", "#savenote", function () {
     $("#titleinput").val("");
     $("#bodyinput").val("");
 });
+
+$(document).on("click", "#deletenote", function (){
+    var thisId = $(this).attr("data-id");
+
+    $.ajax({
+        method: "DELETE",
+        url: "/articles" + thisId,
+    }).then(function(data){
+        pageload();
+    })
+})
 
 $(document).on("click", ".scraper", function () {
     $("#articles").empty();

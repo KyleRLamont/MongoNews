@@ -15,10 +15,10 @@ app.use(express.json());
 app.use(express.static("public"));
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
-
-mongoose.connect(MONGODB_URI);
-mongoose.set('useFindAndModify',false)
+mongoose.set('useFindAndModify', false)
 mongoose.set('useNewUrlParser', true)
+mongoose.connect(MONGODB_URI);
+
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
@@ -83,6 +83,14 @@ app.post("/articles/:id", function (req, res) {
         .catch(function (err) {
             res.json(err);
         });
+});
+
+app.delete("/articles/:id", function (req, res) {
+    db.Note.findOneAndDelete({
+        "_id": req.params.id
+    }).then(function(data){
+        res.json(data)
+    })
 });
 
 app.listen(PORT, function () {
