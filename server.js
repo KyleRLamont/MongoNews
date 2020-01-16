@@ -17,6 +17,8 @@ app.use(express.static("public"));
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
 mongoose.connect(MONGODB_URI);
+mongoose.set('useFindAndModify',false)
+mongoose.set('useNewUrlParser', true)
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
@@ -61,7 +63,7 @@ app.get("/articles", function (req, res) {
 
 app.get("/articles/:id", function (req, res) {
     db.Article.findOne({ _id: req.params.id })
-        .populate("note")
+        .populate("notes")
         .then(function (dbArticle) {
             res.json(dbArticle);
         })

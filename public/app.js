@@ -10,7 +10,7 @@ var pageload = function () {
     }).then(function (data) {
         $("#articles").empty();
         for (var i = 0; i < data.length; i++) {
-            $("#articles").append("<p>" + data[i].title + "<br />" + "<a href ='https://www.nytimes.com" + data[i].link + "'>" + "Article Link" + "</a>" + "<br />" + "<button class='addnote' data-id='" + data[i]._id + "'>" + "Add Note" + "</button>" + "</p>");
+            $("#articles").append("<p>" + data[i].title + "<br />" + "<a href ='https://www.nytimes.com" + data[i].link + "'>" + "Article Link" + "</a>" + "<br />" + "<button class='addnote' data-id='" + data[i]._id + "'>" + "Add Note" + "</button>" + "<button class='viewnote' data-id='" + data[i]._id + "'>" + "View Notes" + "</button>" + "</p>");
         }
     })
 }
@@ -23,20 +23,32 @@ $(document).on("click", ".addnote", function () {
     $.ajax({
         method: "GET",
         url: "/articles/" + thisId
-    })
-        .then(function (data) {
-            console.log(data);
-            $("#notes").append("<p>" + data.title + "</p>");
-            $("#notes").append("<input id='titleinput' name='title' >");
-            $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
-            $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+    }).then(function (data) {
+        console.log(data);
+        $("#notes").append("<p>" + data.title + "</p>");
+        $("#notes").append("<input id='titleinput' name='title' >");
+        $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
+        $("#notes").append("<br><button data-id='" + data._id + "' id='savenote'>Save Note</button>");
 
-            if (data.note) {
-                $("#titleinput").val(data.note.title);
-                $("#bodyinput").val(data.note.body);
-            }
-        });
+        if (data.note) {
+            $("#titleinput").val(data.note.title);
+            $("#bodyinput").val(data.note.body);
+        }
+    });
 });
+
+$(document).on("click", ".viewnote", function () {
+    $("#notes").empty();
+    var thisId = $(this).attr("data-id");
+    console.log(thisId)
+    $.ajax({
+        method: "GET",
+        url: "/articles/" + thisId
+    }).then(function (data) {
+        console.log(data)
+        $("#notes").append("<p>" + data.note.title + "<br />" + data.note.body + "</p>")
+    })
+})
 
 $(document).on("click", "#savenote", function () {
     var thisId = $(this).attr("data-id");
@@ -48,12 +60,11 @@ $(document).on("click", "#savenote", function () {
             title: $("#titleinput").val(),
             body: $("#bodyinput").val()
         }
-    })
-        .then(function (data) {
-            console.log(data);
-            alert("Note Saved!");
-            $("#notes").empty();
-        });
+    }).then(function (data) {
+        console.log(data);
+        alert("Note Saved!");
+        $("#notes").empty();
+    });
 
     $("#titleinput").val("");
     $("#bodyinput").val("");
